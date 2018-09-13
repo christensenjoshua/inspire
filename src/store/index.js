@@ -6,15 +6,24 @@ import 'firebase/auth'
 import db from '../utils/firebaseInit'
 import axios from 'axios'
 
+let api = axios.create({
+    baseURL: 'http://bcw-sandbox.herokuapp.com/api/',
+    timeout: 5000
+})
 vue.use(vuex)
 
 let store = new vuex.Store({
     state: {
-        user: {}
+        user: {},
+        currImage: {},
+        currQuote: {}
     },
     mutations: {
         setUser(state, payload) {
             state.user = payload
+        },
+        setImage(state, payload) {
+            state.currImage = payload
         }
     },
     actions: {
@@ -51,11 +60,20 @@ let store = new vuex.Store({
         authenticate({ commit, dispatch }) {
             firebase.auth().onAuthStateChanged(user => {
                 if (user) {
+                    dispatch('getImage')
                     commit('setUser', user)
                     router.push('/dashboard')
                 } else {
                     router.push('/')
                 }
+            })
+        },
+        getImage({ commit, dispatch }) {
+            api.get('images').then(res => {
+                commit('setImage', res.data)
+                document.getElementById('app').style.backgroundImage = "url('" + res.data.large_url + "'"
+            }).catch(err => {
+                console.error(err)
             })
         }
     }
