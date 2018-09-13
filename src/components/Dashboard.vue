@@ -1,24 +1,29 @@
 <template>
     <div class="dashboard">
-        <div class="row dashrow">
-            <div class="col-12 text-right">
-                <p><span class="shadow-lg">Here will be the weather stuff!</span></p>
+        <div class="row dashrow-top justify-content-between">
+            <div class="col-8">
+
+            </div>
+            <div class="col-4 over-item shadow-lg rounded text-right">
+                <p>Here will be the weather stuff!</p>
             </div>
         </div>
-        <div class="row dashrow">
-            <div class="col-12 text-center">
-                <h2><span class="shadow-lg">Good Morning {{user.displayName}}</span></h2>
+        <div class="row dashrow-mid justify-content-between">
+            <div class="col4"></div>
+            <div class="col-4 text-center over-item shadow-lg rounded">
+                <h2>Good Morning {{user.displayName}}</h2>
             </div>
+            <div class="col4"></div>
         </div>
-        <div class="row dashrow">
-            <div class="col-4">
-                <p><span class="shadow-lg">An Image Name?</span></p>
+        <div class="row dashrow-bottom justify-content-between">
+            <div class="col-4 over-item shadow-lg rounded">
+                <p>An Image Name?</p>
             </div>
-            <div class="col-4">
-                <p><span class="shadow-lg">Some Quote!</span></p>
+            <div class="col-4 over-item shadow-lg rounded">
+                <p v-if="quote">{{quote.quote}}</p>
             </div>
-            <div class="col-4">
-                <p><span class="shadow-lg">Insert Todo List Here!</span></p>
+            <div class="col-4 over-item shadow-lg rounded">
+                <p>Insert Todo List Here!</p>
             </div>
         </div>
     </div>
@@ -34,6 +39,9 @@
         computed: {
             user() {
                 return this.$store.state.user
+            },
+            quote() {
+                return this.$store.state.currQuote
             }
         },
         methods: {},
@@ -49,7 +57,19 @@
         /* background-color: rgba(255, 255, 255, 0.5) */
     }
 
-    .dashrow {
-        height: 33.33333333333%;
+    .dashrow-top {
+        height: 25%;
+    }
+
+    .dashrow-mid {
+        height: 50%;
+    }
+
+    .dashrow-bottom {
+        height: 25%;
+    }
+
+    .over-item {
+        background-color: rgba(255, 255, 255, 0.8);
     }
 </style>

@@ -24,6 +24,9 @@ let store = new vuex.Store({
         },
         setImage(state, payload) {
             state.currImage = payload
+        },
+        setQuote(state, payload) {
+            state.currQuote = payload
         }
     },
     actions: {
@@ -61,6 +64,7 @@ let store = new vuex.Store({
             firebase.auth().onAuthStateChanged(user => {
                 if (user) {
                     dispatch('getImage')
+                    dispatch('getQuote')
                     commit('setUser', user)
                     router.push('/dashboard')
                 } else {
@@ -72,6 +76,13 @@ let store = new vuex.Store({
             api.get('images').then(res => {
                 commit('setImage', res.data)
                 document.getElementById('app').style.backgroundImage = "url('" + res.data.large_url + "'"
+            }).catch(err => {
+                console.error(err)
+            })
+        },
+        getQuote({ commit, dispatch }) {
+            api.get('quotes').then(res => {
+                commit('setQuote', res.data)
             }).catch(err => {
                 console.error(err)
             })
