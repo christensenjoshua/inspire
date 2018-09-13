@@ -10,7 +10,11 @@ Vue.config.productionTip = false
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
+  created() {
+    this.$store.dispatch('authenticate')
+  },
   router,
+  store,
   components: { App },
   template: '<App/>'
 })
