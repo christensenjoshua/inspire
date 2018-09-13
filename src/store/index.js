@@ -16,7 +16,8 @@ let store = new vuex.Store({
     state: {
         user: {},
         currImage: {},
-        currQuote: {}
+        currQuote: {},
+        payload: {}
     },
     mutations: {
         setUser(state, payload) {
@@ -27,6 +28,9 @@ let store = new vuex.Store({
         },
         setQuote(state, payload) {
             state.currQuote = payload
+        },
+        setWeather(state, payload) {
+            state.weather = payload
         }
     },
     actions: {
@@ -65,6 +69,7 @@ let store = new vuex.Store({
                 if (user) {
                     dispatch('getImage')
                     dispatch('getQuote')
+                    dispatch('getWeather')
                     commit('setUser', user)
                     router.push('/dashboard')
                 } else {
@@ -83,6 +88,13 @@ let store = new vuex.Store({
         getQuote({ commit, dispatch }) {
             api.get('quotes').then(res => {
                 commit('setQuote', res.data)
+            }).catch(err => {
+                console.error(err)
+            })
+        },
+        getWeather({ commit, dispatch }) {
+            api.get('weather').then(res => {
+                commit('setWeather', res.data)
             }).catch(err => {
                 console.error(err)
             })
