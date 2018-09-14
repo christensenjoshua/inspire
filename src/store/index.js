@@ -5,10 +5,18 @@ import firebase from 'firebase/app'
 import 'firebase/auth'
 import db from '../utils/firebaseInit'
 import axios from 'axios'
+import authString from '../utils/unsplash'
 
 let api = axios.create({
     baseURL: 'http://bcw-sandbox.herokuapp.com/api/',
-    timeout: 5000
+    timeout: 10000
+})
+let imageApi = axios.create({
+    baseURL: 'https://api.unsplash.com/',
+    timeout: 3000,
+    headers: {
+        Authorization: authString
+    }
 })
 vue.use(vuex)
 
@@ -17,7 +25,9 @@ let store = new vuex.Store({
         user: {},
         currImage: {},
         currQuote: {},
-        payload: {}
+        weather: {},
+        todo: {},
+        theTime: {}
     },
     mutations: {
         setUser(state, payload) {
@@ -31,6 +41,12 @@ let store = new vuex.Store({
         },
         setWeather(state, payload) {
             state.weather = payload
+        },
+        setTodo(state, payload) {
+            state.todo = payload
+        },
+        setTime(state, payload) {
+            state.theTime = payload
         }
     },
     actions: {
@@ -71,6 +87,7 @@ let store = new vuex.Store({
                     dispatch('getQuote')
                     dispatch('getWeather')
                     commit('setUser', user)
+                    dispatch('getTodo')
                     router.push('/dashboard')
                 } else {
                     router.push('/')
@@ -78,9 +95,9 @@ let store = new vuex.Store({
             })
         },
         getImage({ commit, dispatch }) {
-            api.get('images').then(res => {
+            imageApi.get('/photos/random/?w=1920&h=1080').then(res => {
                 commit('setImage', res.data)
-                document.getElementById('app').style.backgroundImage = "url('" + res.data.large_url + "'"
+                document.getElementById('app').style.backgroundImage = "url('" + res.data.urls.custom + "'"
             }).catch(err => {
                 console.error(err)
             })
@@ -94,10 +111,62 @@ let store = new vuex.Store({
         },
         getWeather({ commit, dispatch }) {
             api.get('weather').then(res => {
-                commit('setWeather', res.data)
+                let weather = res.data
+                weather.kelvin = weather.main.temp
+                weather.celsius = (weather.kelvin - 273.15).toFixed(2)
+                weather.fahrenheit = ((weather.kelvin * (9 / 5)) - 459.67).toFixed(2)
+                commit('setWeather', weather)
             }).catch(err => {
                 console.error(err)
             })
+        },
+        getTodo({ state, commit, dispatch }) {
+            db.collection('todo').where('creatorId', '==', state.user.uid).get().then(querySnapshot => {
+                let todoList = []
+                querySnapshot.forEach(doc => {
+                    let item = doc.data()
+                    item.id = doc.id
+                    todoList.push(item)
+                })
+                todoList.sort(function (a, b) {
+                    let aComp = 0
+                    let bComp = 0
+                    if (a.completed) {
+                        aComp++
+                    }
+                    if (b.completed) {
+                        bComp++
+                    }
+                    if (aComp == bComp) {
+                        return (a.timeCreated < b.timeCreated) ? 1 : (a.timeCreated > b.timeCreated) ? -1 : 0
+                    } else {
+                        return (aComp < bComp) ? -1 : 1
+                    }
+                })
+                commit('setTodo', todoList)
+            }).catch(err => {
+                console.error(err)
+            })
+        },
+        createTodo({ state, commit, dispatch }, newTodo) {
+            let item = {}
+            item.creatorId = state.user.uid
+            item.description = newTodo
+            item.completed = false
+            item.timeCreated = new Date().getTime()
+            db.collection('todo').add(item).then(doc => {
+                dispatch('getTodo')
+            }).catch(err => {
+                console.error(err)
+            })
+        },
+        toggleTodo({ commit, dispatch }, item) {
+            db.collection('todo').doc(item.id).set(item).then(() => {
+                dispatch('getTodo')
+            })
+        },
+        setTime({ commit, dispatch }, timeBlob) {
+            commit('setTime', timeBlob)
         }
     }
 })
