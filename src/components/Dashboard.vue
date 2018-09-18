@@ -1,16 +1,16 @@
 <template>
     <div class="dashboard">
         <div class="row dashrow-top justify-content-between">
-            <div class="col-10">
+            <div class="col-8">
 
             </div>
-            <div v-if="weather.kelvin" class="col-2 over-item shadow-lg rounded text-right">
+            <div v-if="weather.kelvin" class="col-4 over-item shadow-lg rounded text-right">
                 <a href="javascript:;" @click="toggleWeather()" style="text-decoration-line: underline; color:black;">
-                    <h3>
+                    <h4>
                         <span v-if="weatherPref=='Fahrenheit'">{{weather.fahrenheit}} &deg;f</span>
                         <span v-if="weatherPref=='Celsius'">{{weather.celsius}} &deg;c</span>
                         <span v-if="weatherPref=='Kelvin'">{{weather.kelvin}} k</span>
-                    </h3>
+                    </h4>
                 </a>
                 <p>{{weather.name}}</p>
                 <img :src="'http://openweathermap.org/img/w/'+weather.weather[0].icon+'.png'">
@@ -31,13 +31,14 @@
             </div>
             <div class="col-4 shadow-lg rounded bottom-row">
                 <p v-if="currImage.id">
-                    <a class="btn btn-dark" :href="currImage.links.html" target="new" style="white-space:normal;">
-                        Image By: {{currImage.user.name}}
+                    <a class="btn btn-dark" :href="'https://unsplash.com/@'+currImage.user.username+'?utm_source=inspire-portfolio-project&utm_medium=referral'"
+                        target="new" style="white-space:normal;">
+                        Image By: {{currImage.user.name}} on UnSplash
                     </a>
                 </p>
             </div>
             <div class="col-4 over-item shadow-lg rounded bottom-row-todo">
-                <h3>To Do: {{todoNum}}</h3>
+                <h4>To Do: {{todoNum}}</h4>
                 <table class="table text-right table-bordered table-striped">
                     <tr v-for="item in todo">
                         <td class="text-left">
@@ -47,7 +48,7 @@
                     </tr>
                 </table>
                 <form @submit.prevent="createTodo(newTodo); newTodo = ''">
-                    <input type="text" placeholder="today I will..." v-model="newTodo">
+                    <input class="form-control" type="text" placeholder="today I will..." v-model="newTodo">
                     <button class="btn btn-sm btn-dark" type="submit">Create</button>
                 </form>
             </div>

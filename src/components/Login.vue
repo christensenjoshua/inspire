@@ -1,13 +1,14 @@
 <template>
     <div class="login h-100 w-100 text-center">
-        <form @submit.prevent="login(user); user= {}">
+        <form class="login-form" @submit.prevent="login(user); user= {}">
             <label for="email">Email</label>
             <input type="email" id="email" name="email" v-model="user.email">
             <label for="password">Password</label>
             <input type="password" id="password" name="password" v-model="user.password">
-            <button class="btn btn-light" type="submit">Login</button>
+            <button class="btn btn-dark" type="submit">Login</button>
+            <hr />
+            <router-link class="btn btn-sm btn-dark" :to="{name: 'Register'}">Register</router-link>
         </form>
-        <router-link :to="{name: 'Register'}">Register</router-link>
     </div>
 </template>
 
@@ -34,5 +35,9 @@
 <style scoped>
     .login {
         padding-top: 30%;
+    }
+
+    .login-form {
+        background-color: rgba(255, 255, 255, 0.9);
     }
 </style>

@@ -21,6 +21,9 @@
         this.$store.dispatch('inspire')
       }
     },
+    mounted() {
+      this.$store.dispatch('getImage')
+    },
     computed: {
       user() {
         return this.$store.state.user
