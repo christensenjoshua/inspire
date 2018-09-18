@@ -8,7 +8,7 @@ import axios from 'axios'
 import authString from '../utils/unsplash'
 
 let api = axios.create({
-    baseURL: 'http://bcw-sandbox.herokuapp.com/api/',
+    baseURL: 'https://bcw-sandbox.herokuapp.com/api/',
     timeout: 10000
 })
 let imageApi = axios.create({
