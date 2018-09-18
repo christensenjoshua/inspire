@@ -26,8 +26,8 @@ let store = new vuex.Store({
         currImage: {},
         currQuote: {},
         weather: {},
-        todo: {},
-        theTime: {}
+        todo: [],
+        todoNum: 0
     },
     mutations: {
         setUser(state, payload) {
@@ -45,8 +45,8 @@ let store = new vuex.Store({
         setTodo(state, payload) {
             state.todo = payload
         },
-        setTime(state, payload) {
-            state.theTime = payload
+        setTodoNum(state, payload) {
+            state.todoNum = payload
         }
     },
     actions: {
@@ -123,8 +123,12 @@ let store = new vuex.Store({
         getTodo({ state, commit, dispatch }) {
             db.collection('todo').where('creatorId', '==', state.user.uid).get().then(querySnapshot => {
                 let todoList = []
+                let unfinished = 0
                 querySnapshot.forEach(doc => {
                     let item = doc.data()
+                    if (!item.completed) {
+                        unfinished++
+                    }
                     item.id = doc.id
                     todoList.push(item)
                 })
@@ -144,6 +148,7 @@ let store = new vuex.Store({
                     }
                 })
                 commit('setTodo', todoList)
+                commit('setTodoNum', unfinished)
             }).catch(err => {
                 console.error(err)
             })
@@ -165,8 +170,10 @@ let store = new vuex.Store({
                 dispatch('getTodo')
             })
         },
-        setTime({ commit, dispatch }, timeBlob) {
-            commit('setTime', timeBlob)
+        inspire({ commit, dispatch }) {
+            dispatch('getImage')
+            dispatch('getQuote')
+            dispatch('getWeather')
         }
     }
 })

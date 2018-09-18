@@ -2,6 +2,7 @@
   <div class="text-center" id="app">
     <div class="row navrow">
       <div class="col-12">
+        <button class="btn btn-light" @click="inspire" v-if="user.email">Inspire!</button>
         <button class="btn btn-light" @click="logout" v-if="user.email">Logout</button>
       </div>
     </div>
@@ -15,6 +16,9 @@
     methods: {
       logout() {
         this.$store.dispatch('logout')
+      },
+      inspire() {
+        this.$store.dispatch('inspire')
       }
     },
     computed: {
