@@ -29,6 +29,9 @@
                 this.$store.dispatch('register', user)
             }
         },
+        mounted() {
+            this.$store.dispatch('getImage')
+        },
         components: {}
     }
 </script>

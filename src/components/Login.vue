@@ -27,6 +27,9 @@
                 this.$store.dispatch('login', user)
             }
         },
+        mounted() {
+            this.$store.dispatch('getImage')
+        },
         components: {}
     }
 </script>

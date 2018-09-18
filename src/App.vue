@@ -21,9 +21,6 @@
         this.$store.dispatch('inspire')
       }
     },
-    mounted() {
-      this.$store.dispatch('getImage')
-    },
     computed: {
       user() {
         return this.$store.state.user
@@ -39,7 +36,7 @@
   }
 
   #app {
-    background-image: url("https://via.placeholder.com/350x350");
+    background-image: url("");
     height: 100%;
     background-position: center;
     background-repeat: no-repeat;
