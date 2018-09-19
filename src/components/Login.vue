@@ -2,9 +2,9 @@
     <div class="login h-100 w-100 text-center">
         <form class="login-form" @submit.prevent="login(user); user= {}">
             <label for="email">Email</label>
-            <input type="email" id="email" name="email" v-model="user.email">
+            <input class="form-control" type="email" id="email" name="email" v-model="user.email" required>
             <label for="password">Password</label>
-            <input type="password" id="password" name="password" v-model="user.password">
+            <input class="form-control" type="password" id="password" name="password" v-model="user.password" required>
             <button class="btn btn-dark" type="submit">Login</button>
             <hr />
             <router-link class="btn btn-sm btn-dark" :to="{name: 'Register'}">Register</router-link>

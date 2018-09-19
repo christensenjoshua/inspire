@@ -2,11 +2,12 @@
     <div class="register h-100 w-100 text-center">
         <form class="register-form" @submit.prevent="register(user); user= {}">
             <label for="displayName">Display Name</label>
-            <input type="text" id="displayName" name="displayName" v-model="user.displayName">
+            <input class="form-control" type="text" id="displayName" name="displayName" v-model="user.displayName"
+                required>
             <label for="email">Email</label>
-            <input type="email" id="email" name="email" v-model="user.email">
+            <input class="form-control" type="email" id="email" name="email" v-model="user.email" required>
             <label for="password">Password</label>
-            <input type="password" id="password" name="password" v-model="user.password">
+            <input class="form-control" type="password" id="password" name="password" v-model="user.password" required>
             <button class="btn btn-dark" type="submit">Register</button>
             <hr />
             <router-link class="btn btn-sm btn-dark" :to="{name: 'Login'}">Login</router-link>

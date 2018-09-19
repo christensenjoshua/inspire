@@ -107,6 +107,7 @@ let store = new vuex.Store({
         },
         getQuote({ commit, dispatch }) {
             api.get('quotes').then(res => {
+                res.data.quote = res.data.quote.replace('&#146;', "'")
                 commit('setQuote', res.data)
             }).catch(err => {
                 console.error(err)

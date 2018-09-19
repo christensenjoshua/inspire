@@ -5,14 +5,14 @@
             </div>
             <div v-if="weather.kelvin" class="col-4 col-md-2 shadow-lg rounded text-right" :class="'over-item-'+themeColor">
                 <a href="javascript:;" @click="toggleWeather()" style="text-decoration-line: underline; color:inherit;">
-                    <h4>
+                    <h5>
                         <span v-if="weatherPref=='Fahrenheit'">{{weather.fahrenheit}} &deg;f</span>
                         <span v-if="weatherPref=='Celsius'">{{weather.celsius}} &deg;c</span>
                         <span v-if="weatherPref=='Kelvin'">{{weather.kelvin}} k</span>
-                    </h4>
+                    </h5>
                 </a>
-                <p>{{weather.name}}</p>
-                <img :src="'https://openweathermap.org/img/w/'+weather.weather[0].icon+'.png'" width="75px">
+                <p>{{weather.name}} - {{weather.weather[0].description}}</p>
+                <img :src="'https://openweathermap.org/img/w/'+weather.weather[0].icon+'.png'">
             </div>
         </div>
         <div class="row dashrow-mid justify-content-between">
@@ -28,7 +28,7 @@
             </div>
             <div class="col-12 col-md-4 shadow-lg rounded bottom-row">
                 <p v-if="currImage.id">
-                    <a class="btn" :class="'btn-'+themeColor" :href="'https://unsplash.com/@'+currImage.user.username+'?utm_source=inspire-portfolio-project&utm_medium=referral'"
+                    <a class="btn btn-secondary" :href="'https://unsplash.com/@'+currImage.user.username+'?utm_source=inspire-portfolio-project&utm_medium=referral'"
                         target="new" style="white-space:normal;">
                         Image By: {{currImage.user.name}} on UnSplash
                     </a>
