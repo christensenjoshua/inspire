@@ -19,9 +19,7 @@
         <div class="row dashrow-mid justify-content-between">
             <div class="col4"></div>
             <div class="col-4 text-center over-item shadow-lg rounded">
-                <h2>Good {{timeOfDay}} {{user.displayName}}</h2>
-                <h3>{{timeBlob.hour}}:{{timeBlob.minute}}:{{timeBlob.second}} <span v-if="!militaryTime">{{timeBlob.ampm}}</span></h3>
-                <button class="btn btn-sm btn-dark" @click="militaryTime = !militaryTime">12h/24h</button>
+                <clock-comp></clock-comp>
             </div>
             <div class="col4"></div>
         </div>
@@ -42,6 +40,7 @@
                 <table class="table text-right table-bordered table-striped">
                     <tr v-for="item in todo">
                         <td class="text-left">
+                            <button @click="removeTodo(item.id)" class="btn btn-sm btn-danger">X</button>
                             <input type="checkbox" :name="item.id" :id="item.id" @click="toggleTodo(item)" :checked="item.completed">
                             <label :for="item.id">{{item.description}}</label>
                         </td>
@@ -56,21 +55,15 @@
     </div>
 </template>
 
-
 <script>
+    import ClockComp from '@/components/Clock'
     export default {
         name: 'dashboard',
         data() {
             return {
                 newTodo: '',
-                timeBlob: {},
-                militaryTime: true,
-                timeOfDay: 'Morning',
                 weatherPref: 'Fahrenheit'
             }
-        },
-        mounted() {
-            this.doTime()
         },
         computed: {
             user() {
@@ -84,9 +77,6 @@
             },
             weather() {
                 return this.$store.state.weather
-            },
-            theTime() {
-                return this.$store.state.theTime
             },
             currImage() {
                 return this.$store.state.currImage
@@ -102,36 +92,11 @@
             toggleTodo(item) {
                 let val = document.getElementById(item.id).checked
                 document.getElementById(item.id).checked = val
-                console.log(val)
                 item.completed = val
                 this.$store.dispatch('toggleTodo', item)
             },
-            doTime() {
-                let today = new Date();
-                let h = today.getHours()
-                let m = today.getMinutes()
-                let s = today.getSeconds()
-                this.timeBlob = {}
-                this.timeBlob.hour = h
-                this.timeBlob.minute = m
-                this.timeBlob.second = s
-                if (this.timeBlob.hour > 2 && this.timeBlob.hour < 12) {
-                    this.timeOfDay = 'Morning'
-                } else if (this.timeBlob.hour > 12 && this.timeBlob.hour < 18) {
-                    this.timeOfDay = 'Afternoon'
-                } else {
-                    this.timeOfDay = 'Evening'
-                }
-                if (this.timeBlob.hour > 12 && !this.militaryTime) {
-                    this.timeBlob.hour -= 12
-                    this.timeBlob.ampm = 'PM'
-                } else {
-                    this.timeBlob.ampm = 'AM'
-                }
-                if (this.timeBlob.hour < 10) { this.timeBlob.hour = '0' + this.timeBlob.hour }
-                if (this.timeBlob.minute < 10) { this.timeBlob.minute = '0' + this.timeBlob.minute }
-                if (this.timeBlob.second < 10) { this.timeBlob.second = '0' + this.timeBlob.second }
-                setTimeout(this.doTime, 500)
+            removeTodo(id) {
+                this.$store.dispatch('removeTodo', id)
             },
             toggleWeather() {
                 if (this.weatherPref == 'Fahrenheit') {
@@ -143,7 +108,9 @@
                 }
             }
         },
-        components: {}
+        components: {
+            'clock-comp': ClockComp
+        }
     }
 </script>
 

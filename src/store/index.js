@@ -60,7 +60,6 @@ let store = new vuex.Store({
         },
         register({ commit, dispatch }, user) {
             firebase.auth().createUserWithEmailAndPassword(user.email, user.password).then(res => {
-                console.log(res.user)
                 commit('setUser', res.user)
                 router.push('/dashboard')
                 firebase.auth().currentUser.updateProfile({ displayName: user.displayName }).then(res => {
@@ -168,6 +167,15 @@ let store = new vuex.Store({
         toggleTodo({ commit, dispatch }, item) {
             db.collection('todo').doc(item.id).set(item).then(() => {
                 dispatch('getTodo')
+            }).catch(err => {
+                console.error(err)
+            })
+        },
+        removeTodo({ commit, dispatch }, id) {
+            db.collection('todo').doc(id).delete().then(() => {
+                dispatch('getTodo')
+            }).catch(err => {
+                console.error(err)
             })
         },
         inspire({ commit, dispatch }) {

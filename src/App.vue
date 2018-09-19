@@ -25,6 +25,8 @@
       user() {
         return this.$store.state.user
       }
+    },
+    components: {
     }
   }
 </script>
