@@ -1,10 +1,10 @@
 <template>
     <div class="dashboard">
         <div class="row dashrow-top justify-content-between">
-            <div class="col-8">
+            <div class="col-8 col-md-10">
 
             </div>
-            <div v-if="weather.kelvin" class="col-4 over-item shadow-lg rounded text-right">
+            <div v-if="weather.kelvin" class="col-4 col-md-2 over-item shadow-lg rounded text-right">
                 <a href="javascript:;" @click="toggleWeather()" style="text-decoration-line: underline; color:black;">
                     <h4>
                         <span v-if="weatherPref=='Fahrenheit'">{{weather.fahrenheit}} &deg;f</span>
@@ -13,21 +13,21 @@
                     </h4>
                 </a>
                 <p>{{weather.name}}</p>
-                <img :src="'https://openweathermap.org/img/w/'+weather.weather[0].icon+'.png'">
+                <img :src="'https://openweathermap.org/img/w/'+weather.weather[0].icon+'.png'" width="75px">
             </div>
         </div>
         <div class="row dashrow-mid justify-content-between">
-            <div class="col4"></div>
-            <div class="col-4 text-center over-item shadow-lg rounded">
+            <div class="col-2 col-md-4"></div>
+            <div class="col-6 col-md-4 text-center over-item shadow-lg rounded">
                 <clock-comp></clock-comp>
             </div>
-            <div class="col4"></div>
+            <div class="col-2 col-md-4"></div>
         </div>
         <div class="row dashrow-bottom justify-content-between">
-            <div class="col-4 over-item shadow-lg rounded bottom-row">
+            <div class="col-12 col-md-4 over-item shadow-lg rounded bottom-row">
                 <p v-if="quote" :title="'- '+quote.author">{{quote.quote}}</p>
             </div>
-            <div class="col-4 shadow-lg rounded bottom-row">
+            <div class="col-12 col-md-4 shadow-lg rounded bottom-row">
                 <p v-if="currImage.id">
                     <a class="btn btn-dark" :href="'https://unsplash.com/@'+currImage.user.username+'?utm_source=inspire-portfolio-project&utm_medium=referral'"
                         target="new" style="white-space:normal;">
@@ -35,7 +35,7 @@
                     </a>
                 </p>
             </div>
-            <div class="col-4 over-item shadow-lg rounded bottom-row-todo">
+            <div class="col-12 col-md-4 over-item shadow-lg rounded bottom-row-todo">
                 <h4>To Do: {{todoNum}}</h4>
                 <table class="table text-right table-bordered table-striped">
                     <tr v-for="item in todo">
@@ -47,7 +47,7 @@
                     </tr>
                 </table>
                 <form @submit.prevent="createTodo(newTodo); newTodo = ''">
-                    <input class="form-control" type="text" placeholder="today I will..." v-model="newTodo">
+                    <input class="form-control" type="text" placeholder="today I will..." v-model="newTodo" required>
                     <button class="btn btn-sm btn-dark" type="submit">Create</button>
                 </form>
             </div>

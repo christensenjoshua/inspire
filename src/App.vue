@@ -37,11 +37,18 @@
     height: 100%;
   }
 
-  #app {
+  body {
     background-image: url("");
+
+  }
+
+  #app {
     height: 100%;
-    background-position: center;
+    background-position: center center;
     background-repeat: no-repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
     background-size: cover;
   }
 

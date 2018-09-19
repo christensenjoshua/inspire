@@ -96,7 +96,7 @@ let store = new vuex.Store({
         getImage({ commit, dispatch }) {
             imageApi.get('/photos/random/?w=1920&h=1080').then(res => {
                 commit('setImage', res.data)
-                document.getElementById('app').style.backgroundImage = "url('" + res.data.urls.custom + "'"
+                document.body.style.backgroundImage = "url('" + res.data.urls.custom + "'"
             }).catch(err => {
                 console.error(err)
             })
