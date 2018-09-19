@@ -1,5 +1,5 @@
 <template>
-    <div class="clock-comp" id="clock-comp">
+    <div class="clock-comp shadow-lg rounded" :class="'over-item-'+themeColor" id="clock-comp">
         <h2>Good {{timeOfDay}} {{user.displayName}}</h2>
         <h3>{{timeBlob.hour}}:{{timeBlob.minute}}:{{timeBlob.second}} <span v-if="!militaryTime">{{timeBlob.ampm}}</span></h3>
         <button class="btn btn-sm btn-dark" @click="militaryTime = !militaryTime">12h/24h</button>
@@ -23,6 +23,9 @@
         computed: {
             user() {
                 return this.$store.state.user
+            },
+            themeColor() {
+                return this.$store.state.theme
             }
         },
         methods: {

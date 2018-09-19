@@ -27,7 +27,8 @@ let store = new vuex.Store({
         currQuote: {},
         weather: {},
         todo: [],
-        todoNum: 0
+        todoNum: 0,
+        theme: 'light'
     },
     mutations: {
         setUser(state, payload) {
@@ -47,6 +48,9 @@ let store = new vuex.Store({
         },
         setTodoNum(state, payload) {
             state.todoNum = payload
+        },
+        setTheme(state, payload) {
+            state.theme = payload
         }
     },
     actions: {
@@ -182,6 +186,15 @@ let store = new vuex.Store({
             dispatch('getImage')
             dispatch('getQuote')
             dispatch('getWeather')
+        },
+        toggleTheme({ state, commit, dispatch }) {
+            let newColor = ''
+            if (state.theme == 'light') {
+                newColor = 'dark'
+            } else {
+                newColor = 'light'
+            }
+            commit('setTheme', newColor)
         }
     }
 })

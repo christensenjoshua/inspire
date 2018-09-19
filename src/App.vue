@@ -2,8 +2,9 @@
   <div class="text-center" id="app">
     <div class="row navrow">
       <div class="col-12">
-        <button class="btn btn-light" @click="inspire" v-if="user.email">Inspire!</button>
-        <button class="btn btn-light" @click="logout" v-if="user.email">Logout</button>
+        <button class="btn" :class="'btn-'+themeColor" @click="toggleTheme" v-if="user.email">Theme</button>
+        <button class="btn" :class="'btn-'+themeColor" @click="inspire" v-if="user.email">Inspire!</button>
+        <button class="btn" :class="'btn-'+themeColor" @click="logout" v-if="user.email">Logout</button>
       </div>
     </div>
     <router-view />
@@ -19,11 +20,23 @@
       },
       inspire() {
         this.$store.dispatch('inspire')
+      },
+      toggleTheme() {
+        if (document.body.style.color == 'white') {
+          document.body.style.color = 'black'
+          this.$store.dispatch('toggleTheme', this.themeColor)
+        } else {
+          document.body.style.color = 'white'
+          this.$store.dispatch('toggleTheme', this.themeColor)
+        }
       }
     },
     computed: {
       user() {
         return this.$store.state.user
+      },
+      themeColor() {
+        return this.$store.state.theme
       }
     },
     components: {
@@ -39,7 +52,7 @@
 
   body {
     background-image: url("");
-
+    color: black;
   }
 
   #app {
