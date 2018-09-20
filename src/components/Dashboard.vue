@@ -30,7 +30,7 @@
                 <p v-if="currImage.id">
                     <a class="btn btn-secondary" :href="'https://unsplash.com/@'+currImage.user.username+'?utm_source=inspire-portfolio-project&utm_medium=referral'"
                         target="new" style="white-space:normal;">
-                        Image By: {{currImage.user.name}} on UnSplash
+                        Image By: {{currImage.user.name}} on Unsplash
                     </a>
                 </p>
             </div>
