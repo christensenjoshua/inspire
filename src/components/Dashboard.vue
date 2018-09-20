@@ -26,7 +26,7 @@
             <div class="col-12 col-md-4 shadow-lg rounded bottom-row" :class="'over-item-'+themeColor">
                 <p v-if="quote" :title="'- '+quote.author">{{quote.quote}}</p>
             </div>
-            <div class="col-12 col-md-4 shadow-lg rounded bottom-row">
+            <div class="col-12 col-md-4 shadow-lg rounded bottom-row padded-top">
                 <p v-if="currImage.id">
                     <a class="btn btn-secondary" :href="'https://unsplash.com/@'+currImage.user.username+'?utm_source=inspire-portfolio-project&utm_medium=referral'"
                         target="new" style="white-space:normal;">
@@ -34,7 +34,7 @@
                     </a>
                 </p>
             </div>
-            <div class="col-12 col-md-4 shadow-lg rounded bottom-row-todo" :class="'over-item-'+themeColor">
+            <div class="col-12 col-md-4 shadow-lg rounded bottom-row-todo padded-bot" :class="'over-item-'+themeColor">
                 <h4>To Do: {{todoNum}}</h4>
                 <table class="table text-right table-bordered table-striped">
                     <tr v-for="item in todo">
@@ -47,7 +47,7 @@
                 </table>
                 <form @submit.prevent="createTodo(newTodo); newTodo = ''">
                     <input class="form-control" type="text" placeholder="today I will..." v-model="newTodo" required>
-                    <button class="btn btn-sm" :class="'btn-'+themeColor" type="submit">Create</button>
+                    <button class="btn btn-sm btn-dark" type="submit">Create</button>
                 </form>
             </div>
         </div>
@@ -157,6 +157,14 @@
         width: 33.33333%;
         overflow: auto;
         height: 100%;
+    }
+
+    .padded-top {
+        padding-top: 15px;
+    }
+
+    .padded-bot {
+        padding-bottom: 10px;
     }
 
     input[type=checkbox]+label {
